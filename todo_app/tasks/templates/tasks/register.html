@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <div>
+                <h1 class="title">Crear una cuenta</h1>
+                <p class="subtitle">
+                    Registrate para guardar y administrar tus tareas.
+                </p>
+            </div>
+        </header>
+
+        {# Errores generales del formulario (non_field_errors) #}
+        {% if form.non_field_errors %}
+            <div class="empty" style="margin-bottom: 12px;">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="form">
+            {% csrf_token %}
+
+            <div class="form-field">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="field-errors">
+                        {% for error in form.username.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="field-errors">
+                        {% for error in form.email.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="field-errors">
+                        {% for error in form.password.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                {{ form.reppassword.label_tag }}
+                {{ form.reppassword }}
+                {% if form.reppassword.errors %}
+                    <div class="field-errors">
+                        {% for error in form.reppassword.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div style="margin-top: 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <button type="submit" class="btn-primary">
+                    Crear cuenta
+                </button>
+
+                <a href="{% url 'tasks:login' %}" class="btn-secondary">
+                    Ya tengo una cuenta
+                </a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
