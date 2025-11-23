@@ -8,7 +8,7 @@ from .forms import TaskForm
 
 
 
-# index: página de bienvenida
+# index: pagina de bienvenida
 def index(request):
     return render(request, "tasks/index.html")
 
@@ -32,9 +32,9 @@ def edit_task(request, task_id):
 
         if form.is_valid():
             form.save()
-            return redirect("task:detail", task_id = task_id)
+            return redirect("tasks:detail", task_id = task.id)
     
     else:
         # Si es un GET, mostramos el formulario precargado con la tarea
         form = TaskForm(instance=task)
-    return render(request, "task/edit.html", {"form":form, "task":task})
+    return render(request, "tasks/edit.html", {"form":form, "task":task})

@@ -71,6 +71,9 @@
                         <dt>Última actualización</dt>
                         <dd>{{ task.updated_at|date:"d/m/Y H:i" }}</dd>
                     </div>
+                    <a class="btn-secondary" href="{% url 'tasks:edit' task.id %}">
+                        Editar tarea
+                    </a>
                 </dl>
             </aside>
         </section>
