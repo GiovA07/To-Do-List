@@ -7,4 +7,5 @@ urlpatterns = [
     path("", views.index, name="index"),      # /tasks/
     path("inicio/", views.main, name="main"), # /tasks/inicio/
     path("<int:task_id>/", views.detail, name="detail"),
+    path("<int>:task_id>/editar/", views.edit_task, name="edit"),
 ]
