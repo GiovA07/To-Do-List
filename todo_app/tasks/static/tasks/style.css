@@ -1,0 +1,334 @@
+/* ===== Reset chiquito + base ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at top, #222b5c 0, #050712 55%, #02030a 100%);
+  color: #e6e8ef;
+  line-height: 1.5;
+}
+
+/* ===== Layout ===== */
+.container {
+  width: min(880px, 92vw);
+  margin: 48px auto;
+  padding: 26px 22px 24px;
+  background: rgba(9, 12, 36, 0.96);
+  border: 1px solid #232850;
+  border-radius: 18px;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(140, 160, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: 1.9rem;
+  letter-spacing: .3px;
+}
+
+.subtitle {
+  margin: 0;
+  color: #aab0d6;
+  font-size: .95rem;
+}
+
+/* Botón */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  text-decoration: none;
+  background: linear-gradient(135deg, #5261ff, #8a5bff);
+  color: #f5f6ff;
+  font-size: .9rem;
+  font-weight: 600;
+  box-shadow: 0 7px 16px rgba(62, 80, 255, 0.55);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(62, 80, 255, 0.65);
+  filter: brightness(1.05);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(62, 80, 255, 0.5);
+}
+
+/* ===== Lista de tareas ===== */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.task-item {
+  background: #0f1331;
+  border: 1px solid #1f2450;
+  border-radius: 12px;
+  padding: 11px 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition:
+    transform .12s ease,
+    border-color .12s ease,
+    background .12s ease,
+    box-shadow .12s ease;
+}
+
+.task-item:hover {
+  transform: translateY(-1px);
+  border-color: #3a46a8;
+  background: #131842;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+.task-link {
+  color: #e6e8ef;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.02rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* puntito/indicador a la izquierda */
+.task-link::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #5b7cfa;
+  box-shadow: 0 0 0 3px rgba(91, 124, 250, .18);
+}
+
+/* meta (estado + prioridad) */
+.task-meta {
+  font-size: .85rem;
+  color: #9aa2d1;
+  white-space: nowrap;
+}
+
+/* estado vacío */
+.empty {
+  margin-top: 10px;
+  padding: 14px;
+  color: #c7cbe6;
+  background: #0f132f;
+  border: 1px dashed #2a2f60;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .container {
+    padding: 18px 16px;
+    margin: 24px auto;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-meta {
+    font-size: .8rem;
+  }
+}
+
+
+/* ===== Detail page ===== */
+
+.detail-page {
+  margin-top: 40px;
+}
+
+.detail-header {
+  align-items: center;
+}
+
+/* Botón secundario */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #3c4374;
+  text-decoration: none;
+  background: rgba(10, 14, 40, 0.9);
+  color: #e2e5ff;
+  font-size: .9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    background .12s ease,
+    border-color .12s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+  border-color: #5058a8;
+  background: rgba(17, 22, 68, 0.98);
+}
+
+/* Badge suave para categoría */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: .8rem;
+}
+
+.badge-soft {
+  background: rgba(120, 135, 255, 0.15);
+  color: #c2c7ff;
+  border: 1px solid rgba(120, 135, 255, 0.35);
+}
+
+/* Layout de dos columnas */
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(260px, 1.2fr);
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.detail-card {
+  background: #0f1331;
+  border: 1px solid #1f2450;
+  border-radius: 14px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+.section-title {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  color: #cfd4ff;
+}
+
+.detail-text {
+  margin: 0;
+  color: #dde1ff;
+  font-size: .95rem;
+}
+
+.detail-empty {
+  color: #9aa2d1;
+  font-style: italic;
+}
+
+/* Sidebar info */
+.detail-list {
+  margin: 0;
+  padding: 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(45, 52, 104, 0.6);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row dt {
+  margin: 0;
+  font-size: .86rem;
+  color: #aab0dd;
+}
+
+.detail-row dd {
+  margin: 0;
+  font-size: .86rem;
+  color: #e4e6ff;
+  text-align: right;
+}
+
+/* Pills para estado/prioridad */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+/* Podés tunear por estado/prioridad si después generás clases dinámicas */
+.pill-state {
+  background: rgba(86, 217, 164, 0.12);
+  color: #8cf7c9;
+  border: 1px solid rgba(86, 217, 164, 0.6);
+}
+
+.pill-priority {
+  background: rgba(255, 201, 87, 0.12);
+  color: #ffdf9a;
+  border: 1px solid rgba(255, 201, 87, 0.6);
+}
+
+.muted {
+  color: #9aa2d1;
+  font-size: .83rem;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-row dd {
+    text-align: left;
+  }
+}

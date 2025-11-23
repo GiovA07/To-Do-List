@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Tareas</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <div>
+                <h1 class="title">Bienvenido</h1>
+                <p class="subtitle">
+                    En esta página podrás administrar las tareas de tu día a día.
+                </p>
+            </div>
+        </header>
+
+        <ul class="index-actions">
+            <li>
+                <a class="btn-primary" href="#">
+                    Iniciar sesión
+                </a>
+            </li>
+            <li>
+                <a class="btn-secondary" href="{% url 'tasks:main' %}">
+                    Ingresar como invitado
+                </a>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>
