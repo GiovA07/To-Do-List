@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 
 # index: pagina de bienvenida
 def index(request):
+    if request.user.is_authenticated:
+        return redirect("tasks:main")
     return render(request, "tasks/index.html")
 
 # main: lista de tareas
