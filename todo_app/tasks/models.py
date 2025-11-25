@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 # Create your models here.
 class Task(models.Model):
     STATE_TASK = [
@@ -12,6 +12,12 @@ class Task(models.Model):
         ("M", "MEDIA"),
         ("A", "ALTA"),
     ]
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="tasks",
+
+    )
     title       = models.CharField(max_length=30)
     description = models.TextField(blank=True)  #Description Opcional
     state       = models.CharField(max_length=1, choices=STATE_TASK, default="P")

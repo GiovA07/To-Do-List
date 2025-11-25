@@ -3,6 +3,7 @@ from .models import Task
 from .forms import TaskForm, LoginForm, RegisterForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -17,17 +18,23 @@ def index(request):
     return render(request, "tasks/index.html")
 
 # main: lista de tareas
+@login_required
 def main(request):
-    latest_tasks_list = Task.objects.order_by("-created_at")[:5]
+    latest_tasks_list = (Task.objects
+                        .filter(user=request.user)
+                        .order_by("-created_at")[:5]
+                        )
     context = {"latest_tasks_list": latest_tasks_list}
     return render(request, "tasks/main.html", context)
 
 # detalle de una tarea
+@login_required
 def detail(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     return render(request, "tasks/detail.html", {"task": task})
 
 # edit: pagina para editar las tareas
+@login_required
 def edit_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
 
@@ -43,11 +50,14 @@ def edit_task(request, task_id):
         form = TaskForm(instance=task)
     return render(request, "tasks/edit.html", {"form":form, "task":task})
 
+@login_required
 def add_task(request):
     if request.method == "POST":
         form = TaskForm(request.POST)
 
         if form.is_valid():
+            task = form.save(commit=False)
+            task.user = request.user
             form.save()
             return redirect("tasks:main")
     
@@ -56,7 +66,7 @@ def add_task(request):
     
     return render(request, "tasks/add_task.html", {"form": form})
 
-
+@login_required
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     task.delete()
