@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Task
-from django.http import Http404
 from .forms import TaskForm, LoginForm, RegisterForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -41,6 +40,26 @@ def edit_task(request, task_id):
         # Si es un GET, mostramos el formulario precargado con la tarea
         form = TaskForm(instance=task)
     return render(request, "tasks/edit.html", {"form":form, "task":task})
+
+def add_task(request):
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("tasks:main")
+    
+    else:
+        form = TaskForm()
+    
+    return render(request, "tasks/add_task.html", {"form": form})
+
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    task.delete()
+    return redirect("tasks:main")
+
 
 #login: pagina para logearte como usuario
 def login_view(request):

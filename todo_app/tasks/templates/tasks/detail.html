@@ -19,7 +19,7 @@
                 {% endif %}
             </div>
 
-            <a href="{% url 'tasks:index' %}" class="btn-secondary">← Volver a la lista</a>
+            <a href="{% url 'tasks:main' %}" class="btn-secondary">← Volver a la lista</a>
         </header>
 
         <section class="detail-grid">
@@ -71,9 +71,18 @@
                         <dt>Última actualización</dt>
                         <dd>{{ task.updated_at|date:"d/m/Y H:i" }}</dd>
                     </div>
+
                     <a class="btn-secondary" href="{% url 'tasks:edit' task.id %}">
                         Editar tarea
                     </a>
+
+                    <form method="post" action="{% url 'tasks:delete' task.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-danger">
+                            Eliminar tarea
+                        </button>
+                    </form>
+                    
                 </dl>
             </aside>
         </section>

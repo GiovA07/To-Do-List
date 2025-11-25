@@ -15,7 +15,7 @@
                 <h1 class="title">Mis tareas</h1>
                 <p class="subtitle">Lista de tareas pendientes, en progreso y completadas.</p>
             </div>
-            <a href="#" class="btn-primary">+ Nueva tarea</a> 
+            <a href="{% url 'tasks:add'%}" class="btn-primary">+ Nueva tarea</a> 
         </header>
         <ul class="task-list">
             {% if latest_tasks_list %}
