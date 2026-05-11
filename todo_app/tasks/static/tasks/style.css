@@ -443,3 +443,15 @@ body {
   color: #ffb3b3;
   border: 1px solid rgba(255, 102, 102, 0.4);
 }
+
+.badget-overdue {
+    background: rgba(255, 102, 102, 0.15);
+    color: #ff6666;
+    border: 1px solid rgba(255, 102, 102, 0.4);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 8px;
+    text-transform: uppercase;
+}

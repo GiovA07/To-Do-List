@@ -18,6 +18,11 @@
                 <li class="task-item state-{{task.state}}">
                     <a class="task-link" href="{% url 'tasks:detail' task.id %}">
                         {{task.title}}
+
+                        {%if task.is_overdue%}
+                            <span class="badget-overdue">⚠️ Vencida</span>
+                        {% endif %}
+                        
                     </a>
                     <span class="task-meta">
                         {{ task.get_state_display }} · Prioridad: {{ task.get_priority_display }}

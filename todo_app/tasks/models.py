@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
+
 # Create your models here.
 class Task(models.Model):
     STATE_TASK = [
@@ -27,6 +29,14 @@ class Task(models.Model):
     
     created_at  = models.DateTimeField(auto_now_add=True)   # cuando se creo
     updated_at  = models.DateTimeField(auto_now=True)       # ultima modificación
+
+
+    @property
+    def is_overdue(self):
+        if self.date and self.state != "C":
+                return self.date < timezone.now().date()
+        return False
+    
 
     def __str__(self):
         return self.title
