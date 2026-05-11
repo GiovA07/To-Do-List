@@ -4,13 +4,10 @@ from .forms import TaskForm, LoginForm, RegisterForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 
 # Create your views here.
-
-
-
 # index: pagina de bienvenida
 def index(request):
     if request.user.is_authenticated:
@@ -20,23 +17,24 @@ def index(request):
 # main: lista de tareas
 @login_required
 def main(request):
-    latest_tasks_list = (Task.objects
-                        .filter(user=request.user)
-                        .order_by("-created_at")[:5]
-                        )
-    context = {"latest_tasks_list": latest_tasks_list}
+    state = request.GET.get("estado")
+    tasks = Task.objects.filter(user=request.user)
+    if state:
+        tasks = tasks.filter(state = state)
+    
+    context = {"latest_tasks_list": tasks}
     return render(request, "tasks/main.html", context)
 
 # detalle de una tarea
 @login_required
 def detail(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
     return render(request, "tasks/detail.html", {"task": task})
 
 # edit: pagina para editar las tareas
 @login_required
 def edit_task(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
 
     if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
@@ -58,7 +56,10 @@ def add_task(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user
-            form.save()
+            task.save()
+
+            msg = "La tarea '" + task.title + "' se agrego correctamente!." 
+            messages.success(request, msg)
             return redirect("tasks:main")
     
     else:
@@ -68,8 +69,10 @@ def add_task(request):
 
 @login_required
 def delete_task(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
     task.delete()
+    msg = "La tarea '" + task.title + "' fue eliminada." 
+    messages.warning(request, msg)
     return redirect("tasks:main")
 
 

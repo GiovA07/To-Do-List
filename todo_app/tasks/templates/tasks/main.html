@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Tareas</title>
-    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
-
-</head>
-<body>
-    <main class="conteiner">
-        <header class="header">
-            <div>
-                <h1 class="title">Mis tareas</h1>
-                <p class="subtitle">Lista de tareas pendientes, en progreso y completadas.</p>
+{% extends 'tasks/base.html' %}
+{% block content %}
+    <header class="header">
+        <div>
+            <h1 class="title">Mis tareas</h1>
+            <div class="filtros">
+                <a href="?" class="btn-secondary">Todas</a> 
+                <a href="?estado=P" class="btn-secondary">Pendientes</a>
+                <a href="?estado=E" class="btn-secondary">En Progreso</a>
+                <a href="?estado=C" class="btn-secondary">Completadas</a>
             </div>
-            <a href="{% url 'tasks:add'%}" class="btn-primary">+ Nueva tarea</a> 
-        </header>
-        <ul class="task-list">
-            {% if latest_tasks_list %}
+        </div>
+        <a href="{% url 'tasks:add' %}" class="btn-primary">+ Nueva tarea</a> 
+    </header>
+    <ul class="task-list">
+        {% if latest_tasks_list %}
             {% for task in latest_tasks_list %}
-                <li class="task-item">
+                <li class="task-item state-{{task.state}}">
                     <a class="task-link" href="{% url 'tasks:detail' task.id %}">
                         {{task.title}}
                     </a>
@@ -29,13 +24,9 @@
                     </span>
                 </li>
             {% endfor %}
+        {% else %}
+            <p class="empty">No hay tareas disponibles. Creá tu primera tarea para empezar...</p>
+        {% endif %}
+    </ul>
+{% endblock %}
 
-            {% else %}
-                <p class="empty">No hay tareas disponibles. Creá tu primera tarea para empezar...</p>
-            {% endif %}
-        </ul>
-        <a href="{% url 'tasks:logout'%}" class="btn-primary">Cerrar Sesion</a> 
-
-    </main>
-</body>
-</html>

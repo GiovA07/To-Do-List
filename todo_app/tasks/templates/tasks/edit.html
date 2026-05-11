@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar tarea – {{ task.title }}</title>
-    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
-</head>
-<body>
-    <main class="container">
-        <header class="header">
-            <div>
-                <h1 class="title">Editar tarea</h1>
-                <p class="subtitle">Modificando los datos de la tarea seleccionada.</p>
-            </div>
-        </header>
+{% extends 'tasks/base.html' %}
 
-        <form method="post" class="form">
-            {% csrf_token %}
-            {{ form.as_p }}
+{% block title %}{{ task.title }} - Editar tarea{% endblock %}
 
-            <button type="submit" class="btn-primary">Guardar cambios</button>
-            <a href="{% url 'tasks:detail' task.id %}" class="btn-secondary">Cancelar</a>
-        </form>
-    </main>
-</body>
-</html>
+{% block main_class %}edit-page{% endblock %}
+{% block content %}
+    <header class="header">
+        <div>
+            <h1 class="title">Editar tarea</h1>
+            <p class="subtitle">Modificando los datos de la tarea seleccionada.</p>
+        </div>
+    </header>
+
+    <form method="post" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn-primary">Guardar cambios</button>
+        <a href="{% url 'tasks:detail' task.id %}" class="btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>Nueva tarea</title>
-    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
-</head>
-<body>
-    <main class="container">
-        <header class="header">
-            <div>
-                <h1 class="title">Crear nueva tarea</h1>
-                <p class="subtitle">Completá los datos y guardá tu tarea.</p>
-            </div>
-        </header>
+{% extends 'tasks/base.html' %}
 
-        <form method="post" class="form">
-            {% csrf_token %}
-            {{ form.as_p }}
+{% block title %}Agregar Tarea – {{ task.title }}{% endblock %}
 
-            <button type="submit" class="btn-primary">Guardar</button>
-            <a href="{% url 'tasks:add' %}" class="btn-secondary">Cancelar</a>
-        </form>
-    </main>
-</body>
-</html>
+{% block content %}
+    <header class="header">
+        <div>
+            <h1 class="title">Crear nueva tarea</h1>
+            <p class="subtitle">Completá los datos y guardá tu tarea.</p>
+        </div>
+    </header>
+
+    <form method="post" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="{% url 'tasks:index' %}" class="btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

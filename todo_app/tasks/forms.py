@@ -8,21 +8,21 @@ class TaskForm(forms.ModelForm):
         fields = ["title", "description", "state", "priority", "date", "category"]
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label="Usuario", max_length=50)
-    password = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
+    username = forms.CharField(label="User", max_length=50)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
 
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(label="Usuario", max_length=50)
-    password = forms.CharField(label="Contraseña", strip=False, widget=forms.PasswordInput)
-    reppassword = forms.CharField(label="Repetir Contraseña",strip=False, widget=forms.PasswordInput)
+    username = forms.CharField(label="User", max_length=50)
+    password = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
+    reppassword = forms.CharField(label="Repeat Password",strip=False, widget=forms.PasswordInput)
     email = forms.EmailField(label="Email", widget=forms.EmailInput)
 
     #VALIDACIONES
     def clean_username(self):
         username = self.cleaned_data["username"]
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError("Ese nombre ya esta en uso.")
+            raise forms.ValidationError("This name already used.")
         return username
     
     def clean(self):
@@ -31,5 +31,5 @@ class RegisterForm(forms.Form):
         reppassword = cleaned_data.get("reppassword")
 
         if password and reppassword and password != reppassword:
-            self.add_error("reppassword", "Las contraseñas no coinciden.")
+            self.add_error("reppassword", "The passwords do not match.")
         return cleaned_data

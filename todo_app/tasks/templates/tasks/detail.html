@@ -1,91 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ task.title }} - Detalles</title>
-    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
-</head>
-<body>
-    <main class="container detail-page">
-        <header class="header detail-header">
-            <div>
-                <h1 class="title">{{ task.title }}</h1>
-                {% if task.category %}
-                    <p class="subtitle">Categoría: <span class="badge badge-soft">{{ task.category }}</span></p>
-                {% else %}
-                    <p class="subtitle">Detalles de la tarea seleccionada.</p>
-                {% endif %}
-            </div>
+{% extends 'tasks/base.html' %}
+{% block title %}{{ task.title }} - Detalles{% endblock %}
+{% block main_class %}detail-page{% endblock %}
+{% block content %}
+    <header class="header detail-header">
+        <div>
+            <h1 class="title">{{ task.title }}</h1>
+            {% if task.category %}
+                <p class="subtitle">Categoría: <span class="badge badge-soft">{{ task.category }}</span></p>
+            {% else %}
+                <p class="subtitle">Detalles de la tarea seleccionada.</p>
+            {% endif %}
+        </div>
 
-            <a href="{% url 'tasks:main' %}" class="btn-secondary">← Volver a la lista</a>
-        </header>
+        <a href="{% url 'tasks:main' %}" class="btn-secondary">← Volver a la lista</a>
+    </header>
 
-        <section class="detail-grid">
-            <!-- Columna principal: descripción -->
-            <article class="detail-card">
-                <h2 class="section-title">Descripción</h2>
-                {% if task.description %}
-                    <p class="detail-text">
-                        {{ task.description }}
-                    </p>
-                {% else %}
-                    <p class="detail-text detail-empty">
-                        Esta tarea no tiene descripción. Podés agregar más detalles más tarde.
-                    </p>
-                {% endif %}
-            </article>
+    <section class="detail-grid">
+        <!-- Columna principal: descripción -->
+        <article class="detail-card">
+            <h2 class="section-title">Descripción</h2>
+            {% if task.description %}
+                <p class="detail-text">
+                    {{ task.description }}
+                </p>
+            {% else %}
+                <p class="detail-text detail-empty">
+                    Esta tarea no tiene descripción. Podés agregar más detalles más tarde.
+                </p>
+            {% endif %}
+        </article>
 
-            <!-- Columna lateral: metadata -->
-            <aside class="detail-card detail-sidebar">
-                <h2 class="section-title">Información</h2>
-                <dl class="detail-list">
-                    <div class="detail-row">
-                        <dt>Estado</dt>
-                        <dd><span class="pill pill-state">{{ task.get_state_display }}</span></dd>
-                    </div>
-
-                    <div class="detail-row">
-                        <dt>Prioridad</dt>
-                        <dd><span class="pill pill-priority">{{ task.get_priority_display }}</span></dd>
-                    </div>
-
-                    <div class="detail-row">
-                        <dt>Fecha límite</dt>
-                        <dd>
-                            {% if task.date %}
-                                {{ task.date }}
-                            {% else %}
-                                <span class="muted">Sin fecha asignada</span>
-                            {% endif %}
-                        </dd>
-                    </div>
-
-                    <div class="detail-row">
-                        <dt>Creada</dt>
-                        <dd>{{ task.created_at|date:"d/m/Y H:i" }}</dd>
-                    </div>
-
-                    <div class="detail-row">
-                        <dt>Última actualización</dt>
-                        <dd>{{ task.updated_at|date:"d/m/Y H:i" }}</dd>
-                    </div>
-
-                    <a class="btn-secondary" href="{% url 'tasks:edit' task.id %}">
-                        Editar tarea
-                    </a>
-
-                    <form method="post" action="{% url 'tasks:delete' task.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-danger">
-                            Eliminar tarea
-                        </button>
-                    </form>
-                    
-                </dl>
-            </aside>
-        </section>
-    </main>
-</body>
-</html>
+         <!-- Columna lateral: metadata -->
+         <aside class="detail-card detail-sidebar">
+             <h2 class="section-title">Información</h2>
+             <dl class="detail-list">
+                 <div class="detail-row">
+                     <dt>Estado</dt>
+                     <dd><span class="pill pill-state">{{ task.get_state_display }}</span></dd>
+                 </div>
+                 <div class="detail-row">
+                     <dt>Prioridad</dt>
+                     <dd><span class="pill pill-priority">{{ task.get_priority_display }}</span></dd>
+                 </div>
+                 <div class="detail-row">
+                     <dt>Fecha límite</dt>
+                     <dd>
+                         {% if task.date %}
+                             {{ task.date }}
+                         {% else %}
+                             <span class="muted">Sin fecha asignada</span>
+                         {% endif %}
+                     </dd>
+                 </div>
+                 <div class="detail-row">
+                     <dt>Creada</dt>
+                     <dd>{{ task.created_at|date:"d/m/Y H:i" }}</dd>
+                 </div>
+                 <div class="detail-row">
+                     <dt>Última actualización</dt>
+                     <dd>{{ task.updated_at|date:"d/m/Y H:i" }}</dd>
+                 </div>
+                 <a class="btn-secondary" href="{% url 'tasks:edit' task.id %}">
+                     Editar tarea
+                 </a>
+                 <form method="post" action="{% url 'tasks:delete' task.id %}">
+                     {% csrf_token %}
+                     <button type="submit" class="btn-danger">
+                         Eliminar tarea
+                     </button>
+                 </form>
+                 
+             </dl>
+         </aside>
+    </section>
+{% endblock %}
