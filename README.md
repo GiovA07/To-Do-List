@@ -1,4 +1,7 @@
 # To-Do-List
+
+![Demostración](./docs/demo.gif)
+
 Aplicación web de gestión de tareas desarrollada con **Django**.
 Permite a cada usuario registrarse, iniciar sesión y administrar sus propias tareas del día a día.
 
